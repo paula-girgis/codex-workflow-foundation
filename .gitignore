@@ -9,3 +9,6 @@ tests/.tmp/
 .env
 .env.*
 !.env.example
+# Private maintainer records and generated release output are never source.
+/development/
+/dist/

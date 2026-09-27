@@ -4,6 +4,7 @@ from __future__ import annotations
 import copy
 import importlib.util
 import json
+import os
 from pathlib import Path
 import shutil
 import subprocess
@@ -16,7 +17,7 @@ import zipfile
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "tools"))
 from distribution import adopt, bundle, restore, update
-from state import StateError, atomic_write, checkpoint, digest, read_json, resume, validate
+from state import StateError, atomic_write, checkpoint, digest, git_state, read_json, resume, validate
 from workflow import selection
 
 
@@ -26,6 +27,11 @@ class WorkflowTests(unittest.TestCase):
         parent.mkdir(exist_ok=True)
         self.temp = tempfile.TemporaryDirectory(dir=parent)
         self.root = Path(self.temp.name)
+        # Fixtures must not inherit the source checkout's Git HEAD. Explicit
+        # repositories created inside a fixture still use real Git normally.
+        isolation = patch.dict(os.environ, {"GIT_CEILING_DIRECTORIES": str(parent.resolve())})
+        isolation.start()
+        self.addCleanup(isolation.stop)
         self.put("project/DECISIONS.md", "Synthetic test decisions. No real user approval.\n")
         self.put("src/rule.txt", "rule version one\n")
         self.put("evidence/check.txt", "Synthetic check of rule version one passed\n")
@@ -51,6 +57,11 @@ class WorkflowTests(unittest.TestCase):
         route = selection("bug")
         self.assertEqual(route["workflow"], "lightweight")
         self.assertEqual([t["id"] for t in route["tasks"]], ["reproduce", "fix", "verify"])
+
+    def test_fixture_does_not_inherit_source_repository(self):
+        self.assertFalse(git_state(self.root)["repository"])
+        checkpoint(self.state, self.root, self.root / "project/state.json")
+        self.assertEqual(resume(self.state, self.root)["verified_recorded_work"], ["checked"])
 
     def test_ui_feature_has_separate_sequential_approval_gates(self):
         route = selection("feature", True)
@@ -358,7 +369,7 @@ class WorkflowTests(unittest.TestCase):
         self.assertTrue(result["preserved"])
         # Actual changed upstream version, not merely a no-op update.
         upstream = self.root / "upstream"
-        shutil.copytree(ROOT, upstream, ignore=shutil.ignore_patterns(".tmp", "__pycache__", "development", ".git"))
+        shutil.copytree(ROOT, upstream, ignore=shutil.ignore_patterns(".tmp", "__pycache__", "development", ".git", ".local", "dist"))
         release = read_json(upstream / "foundation.json")
         release["version"] = "0.1.1-test-only"
         atomic_write(upstream / "foundation.json", json.dumps(release).encode())

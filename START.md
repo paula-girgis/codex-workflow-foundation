@@ -1,4 +1,4 @@
-# Codex Workflow Foundation v0.1.3
+# Codex Workflow Foundation v0.1.4
 
 أساس خفيف للمشاريع الجديدة وللتغييرات في المشاريع الموجودة. اختار حجم الشغل والأدوات حسب المشروع؛ مفيش framework أو database أو hosting مفروض. ده مش تطبيق جاهز ولا orchestrator.
 

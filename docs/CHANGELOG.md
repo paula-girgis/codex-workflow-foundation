@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.4 — clean-checkout publication fix
+
+- Isolated synthetic fixture Git discovery from the parent source repository; clean-checkout testing exposed false checkpoint HEAD mismatches that did not occur before Git initialization.
+- Added a regression for fixture checkpoint/resume isolation; explicit fixture Git repositories continue to exercise real Git behavior.
+- Excluded private maintainer records and generated distribution output from source tracking. Test upstream copies also omit local runtime and distribution folders.
+- Activated minimal pinned-action CI in the repository. Runtime helpers, state schema, approval gates and skill bodies are unchanged; v0.1.3 artifacts remain preserved.
+
 ## 0.1.3 — onboarding and publication preparation
 
 - Clarified which folder opens in Codex, how the foundation path is supplied, and how existing instructions/skills are preserved.

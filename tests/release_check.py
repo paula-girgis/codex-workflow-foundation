@@ -1,6 +1,7 @@
 """Build and verify a clean local source distribution. Maintainer check, not a project runtime helper."""
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -18,7 +19,8 @@ from workflow import selection
 
 
 def run(root, *arguments):
-    result = subprocess.run([sys.executable, *arguments], cwd=root, capture_output=True, text=True, encoding='utf-8')
+    result = subprocess.run([sys.executable, *arguments], cwd=root, capture_output=True, text=True, encoding='utf-8',
+                            env={**os.environ, 'GIT_CEILING_DIRECTORIES': str(root.parent.resolve())})
     if result.returncode:
         raise AssertionError(result.stdout + result.stderr)
     return result.stdout
