@@ -1,0 +1,2 @@
+# Preserve release-manifest bytes across Windows and CI checkouts.
+* -text

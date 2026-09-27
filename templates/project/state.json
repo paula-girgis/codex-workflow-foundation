@@ -1,0 +1,12 @@
+{
+  "schema_version":"1.0", "revision":1,
+  "objective":"Set the project objective before implementation",
+  "scope":"Set agreed scope and exclusions in project/PROFILE.md",
+  "workflow":"standard", "ui":false,
+  "tasks":[{"id":"discover","status":"Ready","owner":"coordinator","depends_on":[],"requires_approvals":[],"artifacts":[],"evidence":[]}],
+  "artifacts":{}, "approvals":[], "external_operations":[], "saved_unverified":[],
+  "next_action":"Complete project/PROFILE.md and select the appropriately sized workflow",
+  "decisions_file":"project/DECISIONS.md",
+  "portable_files":["project/PROFILE.md","project/DECISIONS.md"],
+  "git":{"head":null}, "delegations":[]
+}

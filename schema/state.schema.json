@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Workflow execution state v1.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "revision", "objective", "scope", "workflow", "ui", "tasks", "artifacts", "approvals", "external_operations", "saved_unverified", "next_action", "decisions_file", "portable_files", "git", "delegations"],
+  "properties": {
+    "schema_version": {"type":"string", "enum":["1.0"]},
+    "revision": {"type":"integer", "minimum":1},
+    "objective": {"$ref":"#/$defs/text"},
+    "scope": {"$ref":"#/$defs/text"},
+    "workflow": {"type":"string", "enum":["lightweight", "standard", "visual", "package"]},
+    "ui": {"type":"boolean"},
+    "synthetic": {"type":"boolean"},
+    "tasks": {"type":"array", "minItems":1, "items":{"$ref":"#/$defs/task"}},
+    "artifacts": {"type":"object", "additionalProperties":{"$ref":"#/$defs/artifact"}},
+    "approvals": {"type":"array", "items":{"$ref":"#/$defs/approval"}},
+    "external_operations": {"type":"array", "items":{"$ref":"#/$defs/operation"}},
+    "saved_unverified": {"type":"array", "items":{"$ref":"#/$defs/unverified"}},
+    "next_action": {"$ref":"#/$defs/text"},
+    "decisions_file": {"$ref":"#/$defs/text"},
+    "portable_files": {"type":"array", "items":{"$ref":"#/$defs/text"}},
+    "git": {"type":"object", "additionalProperties":false, "required":["head"], "properties":{"head":{"type":["string","null"]}}},
+    "delegations": {"type":"array", "items":{"$ref":"#/$defs/delegation"}}
+  },
+  "$defs": {
+    "text": {"type":"string", "minLength":1},
+    "hash": {"type":"string", "pattern":"[a-f0-9]{64}"},
+    "hashes": {"type":"object", "additionalProperties":{"$ref":"#/$defs/hash"}},
+    "strings": {"type":"array", "items":{"$ref":"#/$defs/text"}},
+    "artifact": {
+      "type":"object", "additionalProperties":false, "required":["path","sha256","kind"],
+      "properties":{"path":{"$ref":"#/$defs/text"},"sha256":{"$ref":"#/$defs/hash"},"kind":{"type":"string","enum":["code","contract","image","manifest","document","config","fixture"]}}
+    },
+    "evidence": {
+      "type":"object", "additionalProperties":false, "required":["path","sha256","kind","command","result","inputs"],
+      "properties":{"path":{"$ref":"#/$defs/text"},"sha256":{"$ref":"#/$defs/hash"},"kind":{"type":"string","enum":["test","review","build","integration","design","inspection"]},"command":{"$ref":"#/$defs/text"},"result":{"type":"string","enum":["passed","failed","uncertain"]},"inputs":{"$ref":"#/$defs/hashes"}}
+    },
+    "task": {
+      "type":"object", "additionalProperties":false,
+      "required":["id","status","owner","depends_on","requires_approvals","artifacts","evidence"],
+      "properties":{"id":{"$ref":"#/$defs/text"},"status":{"type":"string","enum":["Not started","Ready","Running","Blocked","Verified complete"]},"owner":{"$ref":"#/$defs/text"},"depends_on":{"$ref":"#/$defs/strings"},"requires_approvals":{"type":"array","items":{"type":"string","enum":["product","wireframe","polished","release"]}},"artifacts":{"$ref":"#/$defs/strings"},"evidence":{"type":"array","items":{"$ref":"#/$defs/evidence"}}}
+    },
+    "approval": {
+      "type":"object", "additionalProperties":false,
+      "required":["id","type","task_id","source","scope","artifact_hashes","decision_path","decision_sha256"],
+      "properties":{"id":{"$ref":"#/$defs/text"},"type":{"type":"string","enum":["product","wireframe","polished","release"]},"task_id":{"$ref":"#/$defs/text"},"source":{"type":"string","enum":["user","synthetic"]},"scope":{"$ref":"#/$defs/text"},"artifact_hashes":{"$ref":"#/$defs/hashes"},"decision_path":{"$ref":"#/$defs/text"},"decision_sha256":{"$ref":"#/$defs/hash"}}
+    },
+    "operation": {
+      "type":"object", "additionalProperties":false, "required":["id","task_id","status","description","check_next"],
+      "properties":{"id":{"$ref":"#/$defs/text"},"task_id":{"$ref":"#/$defs/text"},"status":{"type":"string","enum":["planned","running","unknown","confirmed","failed"]},"description":{"$ref":"#/$defs/text"},"check_next":{"$ref":"#/$defs/text"}}
+    },
+    "unverified": {
+      "type":"object", "additionalProperties":false, "required":["task_id","path","reason"],
+      "properties":{"task_id":{"$ref":"#/$defs/text"},"path":{"$ref":"#/$defs/text"},"reason":{"$ref":"#/$defs/text"}}
+    },
+    "delegation": {
+      "type":"object", "additionalProperties":false, "required":["id","task_id","owner","owned_paths","report_path"],
+      "properties":{"id":{"$ref":"#/$defs/text"},"task_id":{"$ref":"#/$defs/text"},"owner":{"$ref":"#/$defs/text"},"owned_paths":{"$ref":"#/$defs/strings"},"report_path":{"type":["string","null"]}}
+    }
+  }
+}

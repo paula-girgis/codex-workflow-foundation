@@ -1,0 +1,10 @@
+{
+  "name": "codex-workflow-foundation",
+  "version": "0.1.3",
+  "state_schema": "1.0",
+  "include": [
+    "START.md", "AGENTS.md", "foundation.json", "docs/*.md", "examples/*.md",
+    "tools/*.py", "schema/*.json", "templates/project/*", "templates/github/*.yml", ".agents/skills/*/SKILL.md",
+    ".github/pull_request_template.md", ".github/ISSUE_TEMPLATE/*.md"
+  ]
+}

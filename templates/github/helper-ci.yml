@@ -1,0 +1,16 @@
+# Proposed foundation CI only. Not activated or run on GitHub by local setup.
+name: Foundation helper checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  helpers:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - run: python tests/run_acceptance.py
+# Review/pin action revisions under repository policy before activation.
+# Pillow rendering is a separate optional check requiring its declared dependency.
