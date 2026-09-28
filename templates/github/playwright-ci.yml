@@ -1,0 +1,32 @@
+# Optional project workflow. Copy only after selecting the project's package manager,
+# Node version, server command and test scope. This is not part of foundation CI.
+name: Browser checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  playwright:
+    timeout-minutes: 15
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:e2e
+      - if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-diagnostics
+          path: |
+            test-results/
+            test-results.json
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7

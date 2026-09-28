@@ -14,6 +14,8 @@ Run `python tools/workflow.py adopt --target <project>` from the source package;
 
 Read preserved project records before work. An existing `project/state.json` is not converted; validate compatibility manually. Fill the profile and select actual checks. Approvals start empty. An installed foundation does not authorize app implementation or release beyond the project's scope.
 
+Adoption seeds a clean `project/LESSONS.md` only if absent, preserves any existing lessons, and includes it in a newly created state's portable inventory. Updates preserve the live record and only refresh the clean managed template. For older projects or pre-existing state, the agent reconciles the lesson record/inventory as described in [lessons](LESSONS.md); no project history is imported.
+
 ## Updates
 
 Keep a versioned upstream copy. From the desired upstream version run:

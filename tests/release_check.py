@@ -90,6 +90,8 @@ def main():
         fresh = temp / 'fresh'
         run(extracted, 'tools/workflow.py', 'adopt', '--target', str(fresh), '--ui')
         state = read_json(fresh / 'project/state.json')
+        assert (fresh / 'project/LESSONS.md').read_bytes() == files['templates/project/LESSONS.md']
+        assert 'project/LESSONS.md' in state['portable_files']
         assert state['approvals'] == [] and not state['artifacts']
         assert all(t['status'] != 'Verified complete' and not t['evidence'] for t in state['tasks'])
         assert (fresh / '.agents/skills/resume-project/SKILL.md').is_file()
@@ -101,7 +103,8 @@ def main():
         checked_links += links(fresh)
         # Existing instructions/choices are retained, including on documented update.
         existing = temp / 'existing'; (existing / 'project').mkdir(parents=True)
-        original = {'AGENTS.md': b'Existing instructions\n', 'project/PROFILE.md': b'Existing decisions\n', 'existing.txt': b'Pre-existing work\n'}
+        original = {'AGENTS.md': b'Existing instructions\n', 'project/PROFILE.md': b'Existing decisions\n',
+                    'project/LESSONS.md': b'Synthetic existing project knowledge\n', 'existing.txt': b'Pre-existing work\n'}
         for name, data in original.items(): (existing / name).write_bytes(data)
         run(extracted, 'tools/workflow.py', 'adopt', '--target', str(existing), '--kind', 'bug')
         state_before = (existing / 'project/state.json').read_bytes()
@@ -114,11 +117,12 @@ def main():
             'test_workflow.WorkflowTests.test_update_conflict_stops_before_any_writes',
             'test_workflow.WorkflowTests.test_restored_adoption_retains_manifest_and_can_update',
             'test_workflow.WorkflowTests.test_existing_skill_collision_is_not_overwritten',
-            'test_workflow.WorkflowTests.test_rehash_alone_does_not_refresh_evidence_or_approval'],
+            'test_workflow.WorkflowTests.test_rehash_alone_does_not_refresh_evidence_or_approval',
+            'test_lessons.LessonAdoptionTests'],
             cwd=extracted / 'tests', capture_output=True, text=True)
         assert result.returncode == 0, result.stdout + result.stderr
     report = {'passed': True, 'version': release['version'], 'files': len(files), 'archive': archive.relative_to(ROOT).as_posix(), 'archive_sha256': digest(archive),
-              'markdown_links_checked': checked_links, 'targeted_helper_tests': 5, 'inputs': manifest['files'],
+              'markdown_links_checked': checked_links, 'targeted_helper_tests': 8, 'inputs': manifest['files'],
               'checks': ['Clean inclusion allowlist and no concrete host paths', 'Clean templates and skill frontmatter', 'Archive extracted and every manifest hash verified', 'Fresh visual adoption and target-local validate/resume/select', 'Existing instructions/choices/application file/state preserved through adoption/update', 'Conflict, restored-manifest and stale-approval regressions'],
               'limits': ['Standard-library format checks are not automatic skill discovery', 'Local extraction/adoption only, not another-machine or off-device backup', 'Filename/path scan is not a general secret scanner; included text was also reviewed']}
     atomic_write(ROOT / f'development/evidence/release-v{release["version"]}.json', (json.dumps(report, indent=2) + '\n').encode())

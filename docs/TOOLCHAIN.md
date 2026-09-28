@@ -1,5 +1,7 @@
 # Tool inventory and capability boundaries
 
+Current web-testing default: [Playwright Test module](WEB-TESTING.md). For new web projects needing repeatable browser/CI checks, explicitly activate the bundled templates and pin compatible test dependencies. Preserve a suitable existing runner; skip browser work when irrelevant. The dated inventory below predates v0.2.0: its statements that Playwright was uninstalled/untested describe that historical snapshot, not the current local verification. Playwright Test is a Node test runner, not application architecture and not Playwright MCP.
+
 This is a selection guide, not an installation request. Capability labels are independent: **Available** means callable/binary present; **Installed** means local package/plugin files were observed (not necessarily callable); **Configured** means relevant settings exist; **Authenticated** means required account access is confirmed; **Smoke-tested** means a recorded end-to-end check passed; **Proposed** means a candidate only. Do not compress them into “installed and working.” Recheck changing versions, compatibility, prices and quotas when selecting a project stack.
 
 ## Components in plain Egyptian Arabic

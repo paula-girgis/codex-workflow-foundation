@@ -4,6 +4,10 @@ Reusable, adaptive development instructions and small local helpers. Start with 
 
 This private repository publishes **v0.1.4**, a clean-checkout test-isolation fix over the accepted v0.1.3 baseline. README, Git byte-preservation settings, CI and the release integrity reference are repository infrastructure; they are not added to adopted projects or the source distribution. No open-source license has been selected.
 
+## Current local addition
+
+The working source is v0.3.0 with [project lessons](docs/LESSONS.md), building on the optional [Playwright Test module](docs/WEB-TESTING.md). The latest published GitHub version remains v0.1.4; these additions are local only. The local distribution is under `dist/` with manifest/checksum. No remote CI result is claimed for v0.3.0.
+
 ## Use
 
 Download the ZIP and adjacent checksum from the [v0.1.4 release](https://github.com/paula-girgis/codex-workflow-foundation/releases/tag/v0.1.4), or clone this repository with authorized account access. Open your target project folder in Codex, provide the foundation path and a brief, and ask the agent to follow START.md. Python 3.10+ is required; verification uses 3.14. Core helpers use the standard library.

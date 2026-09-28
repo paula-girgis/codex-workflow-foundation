@@ -1,4 +1,4 @@
-# Codex Workflow Foundation v0.1.4
+# Codex Workflow Foundation v0.3.0
 
 أساس خفيف للمشاريع الجديدة وللتغييرات في المشاريع الموجودة. اختار حجم الشغل والأدوات حسب المشروع؛ مفيش framework أو database أو hosting مفروض. ده مش تطبيق جاهز ولا orchestrator.
 
@@ -13,6 +13,10 @@
 3. اختار المسار: bug صغير → reproduce / fix / verify؛ شغل بدون UI → standard؛ شاشات أو رحلة UI جديدة → visual.
 4. اقرأ [المراحل والبوابات](docs/WORKFLOW.md) و[سياسة المعمارية](docs/ARCHITECTURE.md). فعّل [UI](docs/UI.md) فقط لما ينطبق.
 5. استأنف من سجل التنفيذ، افحص الملفات، واشتغل في increment صغير قابل للتحقق. الأدلة والاعتمادات تخص نسخًا محددة.
+
+لما مجال المهمة يتحدد، ابحث عن [الدروس المناسبة](docs/LESSONS.md) في `project/LESSONS.md` فقط. بعد إصلاح مهم متحقق، المساعد يسجّل السبب والحل والدليل وطريقة منع التكرار. مش مطلوب درس لكل تعديل، والسجل مش موافقة أو بديل للـcheckpoint.
+
+للمشاريع الويب الجديدة اللي محتاجة browser tests متكررة، الافتراضي الموصى به هو [Playwright Test](docs/WEB-TESTING.md). احتفظ بـrunner مناسب في مشروع موجود، وتخطَّ المتصفح لما المهمة مش محتاجاه. القوالب بتتنقل مع adoption؛ تفعيلها وتثبيت dependencies/browser خطوة صريحة منفصلة.
 
 ## التثبيت المحلي في مشروع — بدون downloads
 
@@ -62,6 +66,7 @@ python .workflow/tools/workflow.py checkpoint --candidate project/state.candidat
 | الأدوات والإعداد | `docs/TOOLCHAIN.md`؛ حالة الأداة الفعلية في profile |
 | سلوك checkpoint والاستئناف | `tools/state.py` و`docs/RECOVERY.md` |
 | التبنّي والتحديث والميلستون | `tools/distribution.py` و`docs/ADOPTION.md` |
+| معرفة المشروع والدروس المتحققة | `project/LESSONS.md`؛ قواعد التسجيل والبحث في `docs/LESSONS.md` |
 | theme/logo/shared components | ملفات التطبيق اللي تحددها خريطة [UI](docs/UI.md)، مش ملفات workflow |
 
 ## إيه آلي وإيه محتاج حكم وموافقة؟

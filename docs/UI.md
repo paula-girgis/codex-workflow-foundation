@@ -1,5 +1,7 @@
 # Optional UI module
 
+For repeatable browser testing and real rendered screenshots, use the optional [Playwright Test module](WEB-TESTING.md). Preserve approved wireframe/polished artifacts separately from running-app captures and reviewed visual-regression baselines. Screenshot capture never supplies design approval or proves interactions by itself.
+
 Enable this module only for UI work. A small nonvisual bug fix does not require a new design exercise. For existing UI, retain relevant approved baselines and review only the affected screens/states; record why unaffected stages remain applicable. Projects without a UI record that visual gates do not apply.
 
 ## Visual sequence and review gates

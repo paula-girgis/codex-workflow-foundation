@@ -13,7 +13,7 @@ from state import atomic_write
 def source_hashes():
     paths = [root / name for name in ["START.md", "AGENTS.md", "foundation.json", ".gitignore"]]
     for directory in ["tools", "tests", "schema", "docs", "examples", "templates", ".agents", ".github"]:
-        paths.extend(p for p in (root / directory).rglob("*") if p.is_file() and p.suffix in {".py", ".md", ".json", ".yml"} and ".tmp" not in p.parts and "__pycache__" not in p.parts)
+        paths.extend(p for p in (root / directory).rglob("*") if p.is_file() and p.suffix in {".py", ".md", ".json", ".yml", ".mjs"} and ".tmp" not in p.parts and "__pycache__" not in p.parts)
     return {p.relative_to(root).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(set(paths))}
 
 inputs = source_hashes()

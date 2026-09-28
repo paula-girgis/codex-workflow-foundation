@@ -45,7 +45,7 @@ def adopt(target: Path, chosen: dict, source=PACKAGE):
     for name, data in files.items():
         atomic_write(local_path(target, name), data)
     preserved = []
-    for name in ["PROFILE.md", "DECISIONS.md"]:
+    for name in ["PROFILE.md", "DECISIONS.md", "LESSONS.md"]:
         destination = local_path(target, f"project/{name}")
         if destination.exists():
             preserved.append(f"project/{name}")
@@ -57,7 +57,7 @@ def adopt(target: Path, chosen: dict, source=PACKAGE):
     else:
         state = read_json(source / "templates/project/state.json")
         state.update(chosen)
-        state["portable_files"] = sorted([*files, "AGENTS.md", "project/PROFILE.md", "project/DECISIONS.md"])
+        state["portable_files"] = sorted([*files, "AGENTS.md", "project/PROFILE.md", "project/DECISIONS.md", "project/LESSONS.md"])
         # Existing instructions are authoritative; never append or replace them silently.
         state["next_action"] = "Read project/PROFILE.md and existing instructions; agree scope and configure relevant verification commands"
         if not (target / "AGENTS.md").exists():

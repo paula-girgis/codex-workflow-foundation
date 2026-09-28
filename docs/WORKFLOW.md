@@ -61,6 +61,10 @@ Batch independent reads and checks; avoid repeated research/polling. Choose conc
 
 ## Completion checks and enforcement
 
+At discovery, a similar error, or a relevant risky operation, search only applicable [project lessons](LESSONS.md). On completion capture a useful verified fix and its focused prevention when one exists; no entry is required for routine work. The agent maintains the record and references IDs in existing evidence/decisions without creating another execution-state authority.
+
+For new web projects needing repeatable browser checks, activate [Playwright Test](WEB-TESTING.md) explicitly. Preserve a suitable existing runner. During P5 run the changed journey and relevant regressions against a real local application; P6 runs broader critical journeys and representative desktop/narrow layouts. Record source/config/lockfile/test inputs, browser/runtime, passed/failed/skipped/flaky counts and diagnostic artifacts. Failed or flaky critical tests block dependent work; diagnose instead of raising retries or blessing snapshots. P7 uses actual CI results where applicable, not a template or old-version run. Browser workers are isolated test processes, not Codex subagents; bound them by data independence and resources.
+
 For each increment choose applicable format/lint, type/language, build, meaningful rules tests, boundary/integration checks, critical journeys, errors/validation/permissions and UI accessibility/visual review. Add dependency-boundary automation only when scale warrants it. Avoid tests that repeat implementation or arbitrary coverage targets. Existing stack-native checks take precedence over adding tools.
 
 Correctness, security, data-integrity and broken contracts block applicable gates. Style preferences alone do not justify broad rework. Architecture quality and evidence sufficiency need review; neither a linter nor a hash proves them. Product choices need actual user approval. Instructions govern behavior but cannot technically prevent an agent editing files outside this workflow.

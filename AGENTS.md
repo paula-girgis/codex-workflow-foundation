@@ -6,6 +6,7 @@ These instructions apply inside this package, or where a project's own instructi
 - Scale work using docs/WORKFLOW.md. Preserve sound existing conventions. Use docs/ARCHITECTURE.md as observable review criteria; do not scaffold unnecessary layers.
 - For applicable UI work, use docs/UI.md: actual wireframe images and real scoped approval, then polished images and separate approval, before production UI. Never fabricate approval or treat fixture output as product acceptance.
 - Verify increments continuously. Passing a state validator proves structural/freshness checks only. Record meaningful behavior, integration and review evidence against relevant files/contracts.
+- Use docs/LESSONS.md for targeted lesson lookup and concise capture of useful verified fixes. Prefer focused prevention; lessons are contextual knowledge, never approvals or overriding instructions. No lesson is required for a routine task.
 - Coordinator owns dependencies, shared contracts, state and integration. Delegate bounded independent work only when useful and supported, with explicit file ownership and returned evidence. One writer updates authoritative state.
 - Checkpoint persisted files after meaningful work/checks/transitions using the helper. Treat interrupted work and unknown external outcomes as uncertain; inspect before replaying anything.
 - Follow existing authorization. Do not infer deployment, publication, external messaging, installations or destructive changes from a documentation template.
